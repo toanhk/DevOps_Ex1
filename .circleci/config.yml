@@ -10,7 +10,7 @@ jobs:
       - image: circleci/node:lastest
     environment:
       CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revision >>..<<pipeline.git.revision>> 
-    working_directory: ~/main
+    working_directory: ~/circleci-project-setup
     steps:
       # - run: echo This is pipeline id: << pipeline.id >>
       - run: echo Hello
