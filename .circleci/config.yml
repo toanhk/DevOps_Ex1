@@ -7,9 +7,9 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:lastest
       environment:
-        CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revise >> 
+        CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revision >>..<<pipeline.git.revision>> 
       working_directory: ~/main
       steps:
         - run: echo "This is pipeline id: << pipeline.id>>"
