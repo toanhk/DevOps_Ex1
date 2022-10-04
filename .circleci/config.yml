@@ -97,6 +97,9 @@ version: 2.1
 
 commands:
   print_pipeline_id:
+    parameters: 
+      id:
+        type: string
     steps:
       - run: echo ${CIRCLE_WORKFLOW_ID}
 
@@ -105,7 +108,8 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - print_pipeline_id
+      - print_pipeline_id:
+          id: "1234"
 
 workflows:
   my_workflow:
