@@ -1,118 +1,118 @@
-# # Use the latest 2.1 version of CircleCI pipeline process engine.
-# # See: https://circleci.com/docs/2.0/configuration-reference
-# version: 2.1
-
-# # Define a job to be invoked later in a workflow.
-# # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-# commands: 
-#   print_pipeline_id:
-#     # parameters: 
-#     #   id:
-#     #     type: string
-#     steps: 
-#       - runs: echo ${CIRCLE_WORKFLOW_ID}
-#       # - runs: echo << parameters.id >>
-# jobs:
-#   build:
-#     docker:
-#       - image: cimg/base:2020.01
-#     environment:
-#       CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revision >>..<<pipeline.git.revision>> 
-#     working_directory: ~/circleci-project-setup
-#     steps:
-#       # - run: echo This is pipeline id: << pipeline.id >>
-#       - run: echo Hello
-#       - run: echo $CIRCLE_COMPARE_URL
-#       - run:
-#           name: "Setup custom environment variables"
-#           command: echo $MY_ENV_VAR
-#   say-hello:
-#     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-#     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-#     docker:
-#       - image: cimg/base:stable
-#     # Add steps to the job
-#     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-#     steps:
-#       - checkout
-#       - run:
-#           name: "Say hello"
-#           command: "echo Hello, World!"
-
-# # Invoke jobs via workflows
-# # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-#   print_hello:
-#     docker:
-#       - image: circleci/node:13.8.0
-#     steps:
-#       - checkout
-#       - run: echo Hello
-#           # name: "Say hello"
-#           # command: "echo Hello"  
-#   print_world:
-#     docker:
-#       - image: circleci/node:13.8.0 
-#     steps:
-#       - checkout
-#       - run: echo World
-#           # name: "Say hello"
-#           # command: "echo World!"  
-#   save_hello_world_output:
-#     docker:
-#       - image: circleci/node:13.8.0      
-#     steps:
-#       - run: echo "Hello world" > ~/output.txt
-#       - persist_to_workspace:
-#           root: ~/
-#           paths:
-#             - output.txt
-#   print_output_file:
-#     docker:
-#       - image: circleci/node:13.8.0      
-#     steps:
-#       - attach_workspace:
-#           at: ~/
-#       - run: cat ~/output.txt
-#   my_job:  
-#     docker:
-#       - image: circleci/node:13.8.0
-#     steps: 
-#       - print_pipeline_id
-#           # id: "1234"  
-# workflows:
-#   say-hello-workflow:
-#     jobs:
-#       - build
-#       - say-hello
-#       - print_hello
-#       - print_world:
-#           requires:
-#             - print_hello
-#       - save_hello_world_output
-#       - print_output_file:
-#           requires:
-#             - save_hello_world_output
-#       - my_job      
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-commands:
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+commands: 
   print_pipeline_id:
     parameters: 
       id:
         type: string
-    steps:
-      # - run: echo ${CIRCLE_WORKFLOW_ID}
-      - run: echo << parameters.id >>
-
+    steps: 
+      # - runs: echo ${CIRCLE_WORKFLOW_ID}
+      - runs: echo << parameters.id >>
 jobs:
-  my_job:
+  # build:
+  #   docker:
+  #     - image: cimg/base:2020.01
+  #   environment:
+  #     CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revision >>..<<pipeline.git.revision>> 
+  #   working_directory: ~/circleci-project-setup
+  #   steps:
+  #     # - run: echo This is pipeline id: << pipeline.id >>
+  #     - run: echo Hello
+  #     - run: echo $CIRCLE_COMPARE_URL
+  #     - run:
+  #         name: "Setup custom environment variables"
+  #         command: echo $MY_ENV_VAR
+  say-hello:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/base:stable
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  print_hello:
     docker:
       - image: circleci/node:13.8.0
     steps:
+      - checkout
+      - run: echo Hello
+          # name: "Say hello"
+          # command: "echo Hello"  
+  print_world:
+    docker:
+      - image: circleci/node:13.8.0 
+    steps:
+      - checkout
+      - run: echo World
+          # name: "Say hello"
+          # command: "echo World!"  
+  save_hello_world_output:
+    docker:
+      - image: circleci/node:13.8.0      
+    steps:
+      - run: echo "Hello world" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0      
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
+  my_job:  
+    docker:
+      - image: circleci/node:13.8.0
+    steps: 
       - print_pipeline_id:
-          id: "1234"
-
+          id: "1234"  
 workflows:
-  my_workflow:
+  say-hello-workflow:
     jobs:
-      - my_job
+      - build
+      - say-hello
+      - print_hello
+      - print_world:
+          requires:
+            - print_hello
+      - save_hello_world_output
+      - print_output_file:
+          requires:
+            - save_hello_world_output
+      - my_job      
+# version: 2.1
+
+# commands:
+#   print_pipeline_id:
+#     parameters: 
+#       id:
+#         type: string
+#     steps:
+#       # - run: echo ${CIRCLE_WORKFLOW_ID}
+#       - run: echo << parameters.id >>
+
+# jobs:
+#   my_job:
+#     docker:
+#       - image: circleci/node:13.8.0
+#     steps:
+#       - print_pipeline_id:
+#           id: "1234"
+
+# workflows:
+#   my_workflow:
+#     jobs:
+#       - my_job
