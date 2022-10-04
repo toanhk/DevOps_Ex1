@@ -10,8 +10,8 @@ commands:
       id:
         type: string
     steps: 
-      # - runs: echo ${CIRCLE_WORKFLOW_ID}
-      - runs: echo << parameters.id >>
+      - runs: echo ${CIRCLE_WORKFLOW_ID}
+      # - runs: echo << parameters.id >>
 jobs:
   build:
     docker:
