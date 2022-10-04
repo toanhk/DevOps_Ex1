@@ -82,7 +82,7 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - build
+      # - build
       - say-hello
       - print_hello
       - print_world:
